@@ -18,7 +18,7 @@ public interface ReportService {
 
     void vote(Long reviewId, Long reportTaskId, Integer voteResult);
 
-    void calculateVotes(Long reportTaskId);
+    Boolean calculateVotes(Long reportTaskId);
 
     void updateVoteResult(ReportTask reportTask);
 }

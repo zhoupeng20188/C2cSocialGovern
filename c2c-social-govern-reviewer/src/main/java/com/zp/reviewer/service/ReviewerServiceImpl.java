@@ -42,9 +42,18 @@ public class ReviewerServiceImpl implements ReviewerService {
             ReviewerTaskStatus reviewerTaskStatus = new ReviewerTaskStatus();
             reviewerTaskStatus.setReviewerId(id);
             reviewerTaskStatus.setReportTaskId(reportTaskId);
-            reviewerTaskStatus.setVoteResult(ReviewerTaskStatus.PROCESSING);
+            reviewerTaskStatus.setStatus(ReviewerTaskStatus.PROCESSING);
             reviewerMapper.insert(reviewerTaskStatus);
         }
         return list;
+    }
+
+    @Override
+    public void finishVote(Long reviewerId, Long reportTaskId) {
+        ReviewerTaskStatus reviewerTaskStatus = new ReviewerTaskStatus();
+        reviewerTaskStatus.setStatus(ReviewerTaskStatus.FINISHED);
+        reviewerTaskStatus.setReportTaskId(reportTaskId);
+        reviewerTaskStatus.setReviewerId(reviewerId);
+        reviewerMapper.update(reviewerTaskStatus);
     }
 }

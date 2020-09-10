@@ -56,11 +56,11 @@ public class ReportServiceImpl implements ReportService {
 
     /**
      * 对举报任务进行归票
-     *
      * @param reportTaskId
+     * @return true:投票已完成，false:未完成
      */
     @Override
-    public void calculateVotes(Long reportTaskId) {
+    public Boolean calculateVotes(Long reportTaskId) {
         List<ReportTaskVote> reportTaskVotes = reportTaskVoteMapper.selectByReportTaskId(reportTaskId);
         Integer quorum = reportTaskVotes.size() / 2 + 1;
 
@@ -78,15 +78,20 @@ public class ReportServiceImpl implements ReportService {
         ReportTask reportTask = new ReportTask();
 
         reportTask.setId(reportTaskId);
+        Boolean result = false;
         if (approvedVotes >= quorum) {
             // 大多数赞成
             reportTask.setVoteResult(ReportTask.TASK_APPROVED);
+            result = true;
         } else if (unApprovedVotes >= quorum) {
             // 大多数反对
             reportTask.setVoteResult(ReportTask.TASK_UNAPPROVED);
+            result = true;
         }
         // 更新整体投票结果
         updateVoteResult(reportTask);
+
+        return result;
     }
 
     @Override

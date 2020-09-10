@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface ReviewerService {
     List<Long> selectReviewers(Long reportTaskId);
+
+    void finishVote(Long reviewerId, Long reportTaskId);
 }

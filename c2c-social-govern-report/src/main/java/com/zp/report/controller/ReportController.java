@@ -68,7 +68,12 @@ public class ReportController {
      */
     @GetMapping("/report/vote")
     public String vote(Long reviewId, Long reportTaskId, Integer voteResult){
+        // 投票
         reportService.vote(reviewId, reportTaskId, voteResult);
+        // 通知评审员服务完成投票
+        reviewerService.finishVote(reviewId, reportTaskId);
+        // 归票
+        Boolean hashFinished = reportService.calculateVotes(reportTaskId);
         return "success";
     }
 }
