@@ -15,4 +15,10 @@ public interface ReportService {
     void initVote(List<Long> reviewers, Long reportTaskId);
 
     List<ReportTask> queryAll();
+
+    void vote(Long reviewId, Long reportTaskId, Integer voteResult);
+
+    void calculateVotes(Long reportTaskId);
+
+    void updateVoteResult(ReportTask reportTask);
 }

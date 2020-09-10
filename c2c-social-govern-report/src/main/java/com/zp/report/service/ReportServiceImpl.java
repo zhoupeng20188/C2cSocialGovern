@@ -4,7 +4,6 @@ import com.zp.report.entity.ReportTask;
 import com.zp.report.entity.ReportTaskVote;
 import com.zp.report.mapper.ReportMapper;
 import com.zp.report.mapper.ReportTaskVoteMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +24,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void addReportTask(ReportTask reportTask) {
+        reportTask.setVoteResult(ReportTask.TASK_UNKNOWN);
         reportMapper.insert(reportTask);
     }
 
@@ -43,5 +43,54 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<ReportTask> queryAll() {
         return reportMapper.queryAll();
+    }
+
+    @Override
+    public void vote(Long reviewId, Long reportTaskId, Integer voteResult) {
+        ReportTaskVote reportTaskVote = new ReportTaskVote();
+        reportTaskVote.setReviewerId(reviewId);
+        reportTaskVote.setReportTaskId(reportTaskId);
+        reportTaskVote.setVoteResult(voteResult);
+        reportTaskVoteMapper.update(reportTaskVote);
+    }
+
+    /**
+     * 对举报任务进行归票
+     *
+     * @param reportTaskId
+     */
+    @Override
+    public void calculateVotes(Long reportTaskId) {
+        List<ReportTaskVote> reportTaskVotes = reportTaskVoteMapper.selectByReportTaskId(reportTaskId);
+        Integer quorum = reportTaskVotes.size() / 2 + 1;
+
+        Integer approvedVotes = 0;
+        Integer unApprovedVotes = 0;
+
+        for (ReportTaskVote reportTaskVote : reportTaskVotes) {
+            Integer voteResult = reportTaskVote.getVoteResult();
+            if (ReportTaskVote.APPROVED.equals(voteResult)) {
+                approvedVotes++;
+            } else if (ReportTaskVote.UNAPPROVED.equals(voteResult)) {
+                unApprovedVotes++;
+            }
+        }
+        ReportTask reportTask = new ReportTask();
+
+        reportTask.setId(reportTaskId);
+        if (approvedVotes >= quorum) {
+            // 大多数赞成
+            reportTask.setVoteResult(ReportTask.TASK_APPROVED);
+        } else if (unApprovedVotes >= quorum) {
+            // 大多数反对
+            reportTask.setVoteResult(ReportTask.TASK_UNAPPROVED);
+        }
+        // 更新整体投票结果
+        updateVoteResult(reportTask);
+    }
+
+    @Override
+    public void updateVoteResult(ReportTask reportTask) {
+        reportMapper.updateVoteResult(reportTask);
     }
 }

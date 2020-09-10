@@ -6,9 +6,9 @@ package com.zp.report.entity;
  */
 public class ReportTaskVote {
 
-    public static Integer UNKNOWN = -1;
-    public static Integer PROCESSING = 0;
-    public static Integer FINISHED = 1;
+    public static final Integer UNKNOWN = -1;
+    public static final Integer APPROVED = 0;
+    public static final Integer UNAPPROVED = 1;
 
     /**
      * 举报任务投票id

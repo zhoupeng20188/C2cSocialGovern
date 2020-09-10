@@ -58,4 +58,17 @@ public class ReportController {
     public List<ReportTask> queryReportTask(){
         return reportService.queryAll();
     }
+
+    /**
+     * 投票
+     * @param reviewId
+     * @param reportTaskId
+     * @param voteResult
+     * @return
+     */
+    @GetMapping("/report/vote")
+    public String vote(Long reviewId, Long reportTaskId, Integer voteResult){
+        reportService.vote(reviewId, reportTaskId, voteResult);
+        return "success";
+    }
 }
