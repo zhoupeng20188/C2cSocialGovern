@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface ReviewerMapper {
-    @Insert("insert into reviewer_task_status (reviewer_id, report_task_id, vote_result)" +
-            "values(#{reviewerId},#{reportTaskId}, #{voteResult})")
+    @Insert("insert into reviewer_task_status (reviewer_id, report_task_id, status)" +
+            "values(#{reviewerId},#{reportTaskId}, #{status})")
     void insert(ReviewerTaskStatus reviewerTaskStatus);
 }

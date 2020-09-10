@@ -21,7 +21,7 @@ public class ReviewerTaskStatus {
     /**
      * 投票结果
      */
-    private Integer voteResult;
+    private Integer status;
 
     public Long getId() {
         return id;
@@ -47,11 +47,11 @@ public class ReviewerTaskStatus {
         this.reportTaskId = reportTaskId;
     }
 
-    public Integer getVoteResult() {
-        return voteResult;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setVoteResult(Integer voteResult) {
-        this.voteResult = voteResult;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
