@@ -74,6 +74,10 @@ public class ReportController {
         reviewerService.finishVote(reviewId, reportTaskId);
         // 归票
         Boolean hashFinished = reportService.calculateVotes(reportTaskId);
+        if(hashFinished){
+            // 发放奖励
+//            rewardService.giveReward();
+        }
         return "success";
     }
 }
