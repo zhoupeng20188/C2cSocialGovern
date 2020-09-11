@@ -98,4 +98,9 @@ public class ReportServiceImpl implements ReportService {
     public void updateVoteResult(ReportTask reportTask) {
         reportMapper.updateVoteResult(reportTask);
     }
+
+    @Override
+    public List<ReportTaskVote> queryTaskVoteByTaskId(Long reportTaskId) {
+        return reportTaskVoteMapper.selectByReportTaskId(reportTaskId);
+    }
 }

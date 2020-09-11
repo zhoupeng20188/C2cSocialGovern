@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,8 +76,16 @@ public class ReportController {
         // 归票
         Boolean hashFinished = reportService.calculateVotes(reportTaskId);
         if(hashFinished){
+            // 得到所有投票人
+            List<ReportTaskVote> reportTaskVotes = reportService
+                    .queryTaskVoteByTaskId(reportTaskId);
+            List<Long> reviewers = new ArrayList<>();
+            for (ReportTaskVote reportTaskVote : reportTaskVotes) {
+                reviewers.add(reportTaskVote.getReviewerId());
+
+            }
             // 发放奖励
-//            rewardService.giveReward();
+            rewardService.giveReward(reviewers);
         }
         return "success";
     }
