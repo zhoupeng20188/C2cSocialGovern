@@ -158,6 +158,9 @@ public class MyDruidConfig implements DbConfig {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
 //        sessionFactory.setMapperLocations(resolver.getResources(MyDruidConfig.MAPPER));
+
+        // 设置驼峰转换
+        sessionFactory.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
         return sessionFactory.getObject();
     }
 

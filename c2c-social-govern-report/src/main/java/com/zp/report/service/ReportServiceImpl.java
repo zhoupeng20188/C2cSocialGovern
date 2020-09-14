@@ -63,7 +63,7 @@ public class ReportServiceImpl implements ReportService {
     public Boolean calculateVotes(Long reportTaskId) {
         List<ReportTaskVote> reportTaskVotes = reportTaskVoteMapper.selectByReportTaskId(reportTaskId);
         Integer quorum = reportTaskVotes.size() / 2 + 1;
-
+        System.out.println("quorum = " +quorum);
         Integer approvedVotes = 0;
         Integer unApprovedVotes = 0;
 
@@ -88,8 +88,10 @@ public class ReportServiceImpl implements ReportService {
             reportTask.setVoteResult(ReportTask.TASK_UNAPPROVED);
             result = true;
         }
-        // 更新整体投票结果
-        updateVoteResult(reportTask);
+        if(result){
+            // 更新整体投票结果
+            updateVoteResult(reportTask);
+        }
 
         return result;
     }

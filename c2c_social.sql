@@ -37,7 +37,7 @@ CREATE TABLE `report_task_vote` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `report_task_id` int(11) NOT NULL,
   `reviewer_id` int(11) NOT NULL,
-  `report_result` tinyint(4) NOT NULL,
+  `vote_result` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

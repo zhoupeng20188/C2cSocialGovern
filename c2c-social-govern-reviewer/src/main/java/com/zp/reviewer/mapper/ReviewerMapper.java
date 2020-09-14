@@ -17,7 +17,7 @@ public interface ReviewerMapper {
 
     @Update("update reviewer_task_status " +
             "set status = #{status} " +
-            "where reviewer_id = #{reviewerId}" +
+            "where reviewer_id = #{reviewerId} " +
             "and report_task_id = #{reportTaskId}")
     void update(ReviewerTaskStatus reviewerTaskStatus);
 }

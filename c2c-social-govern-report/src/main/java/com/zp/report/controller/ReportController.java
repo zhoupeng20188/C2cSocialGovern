@@ -62,17 +62,17 @@ public class ReportController {
 
     /**
      * 投票
-     * @param reviewId
+     * @param reviewerId
      * @param reportTaskId
      * @param voteResult
      * @return
      */
     @GetMapping("/report/vote")
-    public String vote(Long reviewId, Long reportTaskId, Integer voteResult){
+    public String vote(Long reviewerId, Long reportTaskId, Integer voteResult){
         // 投票
-        reportService.vote(reviewId, reportTaskId, voteResult);
+        reportService.vote(reviewerId, reportTaskId, voteResult);
         // 通知评审员服务完成投票
-        reviewerService.finishVote(reviewId, reportTaskId);
+        reviewerService.finishVote(reviewerId, reportTaskId);
         // 归票
         Boolean hashFinished = reportService.calculateVotes(reportTaskId);
         if(hashFinished){

@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Mapper
 public interface ReportMapper {
-    @Insert("insert into report_task(type, report_user_id report_content, target_id, vote_result) " +
+    @Insert("insert into report_task(type, report_user_id, report_content, target_id, vote_result) " +
             "values(#{type},#{reportUserId},#{reportContent},#{targetId}, #{voteResult})")
     // 为了能拿到主键
     @Options(keyColumn = "id", keyProperty = "id", useGeneratedKeys = true)
@@ -22,7 +22,7 @@ public interface ReportMapper {
 
 
     @Update("update report_task " +
-            "set vote_result = #{voteResult}" +
+            "set vote_result = #{voteResult} " +
             "where id = #{id}")
     void updateVoteResult(ReportTask reportTask);
 
